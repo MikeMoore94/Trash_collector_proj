@@ -11,11 +11,19 @@
         Hello {{ logged_in_employee.name }}!<br />
         Address: {{ logged_in_employee.address }} <br>
         ZipCode: {{ logged_in_employee.zipcode }}<br />
+        
+        {% for customer in todays_customers %}
+        Customer Name: {{ customer.name }}<br />
+        Customer ZipCode: {{ customer.zip_code }}<br />
+        Customer Address: {{ customer.address }}<br />
+        <button>
+          <a href="{% url 'employees:confirm_pickup' customer.id %}">Confirm!</a>
+        </button>
+        {% endfor %}  
 
   {% else %}
     <p>You are at the employee index, but you are not logged in.</p>
     <a href="{% url 'login' %}">Log In</a>
     <a href="{% url 'accounts:register' %}">Sign Up</a>
   {% endif %}
-
 {% endblock %}

@@ -5,6 +5,9 @@ from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from datetime import date
+# from trash_collector.accounts.forms import CustomUserForm
+
+# from trash_collector.customers.models import Customer
 
 from .models import Employee
 
@@ -68,3 +71,13 @@ def edit_profile(request):
             'logged_in_employee': logged_in_employee
         }
         return render(request, 'employees/edit_profile.html', context)
+
+@login_required
+def confirm_pickup(request, customer_id):
+    Customer = apps.get_model('customers.Customer')
+    customers_update = Customer.objects.get(id = customer_id)
+    customers_update.balance += 20
+    customers_update.save()
+    
+    return HttpResponseRedirect(reverse('employees:index'))
+    
