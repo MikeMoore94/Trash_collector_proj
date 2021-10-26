@@ -20,7 +20,7 @@ def index(request):
         # This line will return the customer record of the logged-in user if one exists
         logged_in_employee = Employee.objects.get(user=logged_in_user)
         today = date.today()
-        logged_in_employee_zipcode = logged_in_employee.zip_code
+        logged_in_employee_zipcode = logged_in_employee.zipcode
         Customer = apps.get_model('customers.Customer')
         todays_customers = Customer.objects.filter(zip_code=logged_in_employee_zipcode)
         
