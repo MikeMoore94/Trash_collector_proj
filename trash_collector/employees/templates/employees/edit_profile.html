@@ -1,0 +1,24 @@
+{% extends 'employee_base.html' %}
+{% block navbar %}
+{% endblock %}
+
+{% block title %} Employee Profile Edit {% endblock %}
+
+{% block header %} Update Your Information {% endblock %}
+
+{% block content %}
+<br/>
+<form action="{% url 'employees:edit_profile' %}" method="post">
+    {% csrf_token %}
+    Name: <input type="text" name="name" id="name">
+    <br/>
+    <br/>
+    Address: <input type="text" name="address" id="address">
+    <br/>
+    <br/>
+    Zipcode: <input type="text" name="zipcode" id="zipcode">
+    <br/>
+    <br/>
+    <input type="submit" value="submit">
+</form>
+{% endblock %}
