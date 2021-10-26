@@ -13,15 +13,15 @@
         ZipCode: {{ logged_in_employee.zipcode }}<br />
         <h1>Customers in ZipCode</h1>
         {% for customer in todays_customers %}
-        Customer Name: {{ customer.name }}<br />
+        <li>Customer Name: {{ customer.name }}<br />
         Customer ZipCode: {{ customer.zip_code }}<br />
         Customer Address: {{ customer.address }}<br />
         Customer Weekly Pick-up: {{customer.weekly_pickup }}<br />
-        Customer One time Pick-up: {{customer.one_time_pickup}}
+        Customer One time Pick-up: {{customer.one_time_pickup}}<br />
 
         <button>
           <a href="{% url 'employees:confirm_pickup' customer.id %}">Confirm!</a>
-        </button>
+        </button></li>
         {% endfor %}  
 
   {% else %}
