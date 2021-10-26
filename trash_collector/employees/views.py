@@ -26,10 +26,13 @@ def index(request):
         logged_in_employee_zipcode = logged_in_employee.zipcode
         Customer = apps.get_model('customers.Customer')
         todays_customers = Customer.objects.filter(zip_code=logged_in_employee_zipcode)
-        
+        weekly_pickup = Customer.objects.filter(weekly_pickup=date.today())
+        one_time_pickup = Customer.objects.filter(one_time_pickup=date.today())
         context = {
             'logged_in_employee': logged_in_employee,
             'todays_customers': todays_customers,
+            'weekly_pickup': weekly_pickup,
+            'one_time_pickup': one_time_pickup,
             'today':today
         }
         return render(request, 'employees/index.html', context)
@@ -80,4 +83,3 @@ def confirm_pickup(request, customer_id):
     customers_update.save()
     
     return HttpResponseRedirect(reverse('employees:index'))
-    

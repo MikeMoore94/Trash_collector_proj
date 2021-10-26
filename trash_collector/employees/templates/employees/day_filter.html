@@ -1,0 +1,30 @@
+{% extends 'employees\employee_base.html' %}
+
+{% block title %} Search by Day {% endblock %}
+
+{% block header %} Search by Day {% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+    <form action="{% url 'employees:day_filter' %}" method="POST">
+        {% csrf_token %}
+    <label for="day_filter">Pickup Day:</label>
+        <select class="input-group form-control dropdown">
+            <option class="dropdown-item" value="Monday">Monday</option>
+            <option class="dropdown-item" value="Tuesday">Tuesday</option>
+            <option class="dropdown-item" value="Wednesday">Wednesday</option>
+            <option class="dropdown-item" value="Thursday">Thursday</option>
+            <option class="dropdown-item" value="Friday">Friday</option>
+        </select>
+    <button type="submit">Search</button>        
+    </form>
+
+    <h2>Search Results</h2>
+    {% for customer in filter_customers %}<br />
+        {{customer.name}}<br />
+        {{customer.address}}<br />
+        {{customer.zip_code}}<br />
+        Pickup Day: {{customer.weekly_pickup}}<br />
+    {% endfor %}
+    {% endif %}
+{% endblock %}
