@@ -12,6 +12,9 @@
         Address: {{ logged_in_employee.address }} <br>
         ZipCode: {{ logged_in_employee.zipcode }}<br />
         <h1>Customers in ZipCode</h1>
+        <button>
+          <a href="{% url 'employees:weekday_pickup_search' %}">Click to Search by Day!</a>
+        </button>
         {% for customer in todays_customers %}
         <li>Customer Name: {{ customer.name }}<br />
         Customer ZipCode: {{ customer.zip_code }}<br />
@@ -22,6 +25,8 @@
         <button>
           <a href="{% url 'employees:confirm_pickup' customer.id %}">Confirm!</a>
         </button></li>
+
+        
         {% endfor %}  
 
   {% else %}
