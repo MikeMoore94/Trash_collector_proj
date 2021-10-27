@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from datetime import date
+from django.db.models import Q
 # from trash_collector.accounts.forms import CustomUserForm
 
 # from trash_collector.customers.models import Customer
@@ -23,17 +24,17 @@ def index(request):
         # This line will return the customer record of the logged-in user if one exists
         logged_in_employee = Employee.objects.get(user=logged_in_user)
         today = date.today()
-        logged_in_employee_zipcode = logged_in_employee.zipcode
+        days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
         Customer = apps.get_model('customers.Customer')
-        todays_customers = Customer.objects.filter(zip_code=logged_in_employee_zipcode)
-        weekly_pickup = Customer.objects.filter(weekly_pickup=date.today())
-        one_time_pickup = Customer.objects.filter(one_time_pickup=date.today())
+        all_customers = Customer.objects.all()
+        customers_in_zipcode =  all_customers.filter(zip_code = logged_in_employee.zipcode)
+        customers_pickup_day = customers_in_zipcode.filter(Q(weekly_pickup = days[date.weekday(today)]) | Q(one_time_pickup = today))
+        customers_not_suspended = customers_pickup_day.exclude(Q(suspend_start__lt=today) & Q(suspend_end__gt=today))
+        customers_need_pickup = customers_not_suspended.exclude(date_of_last_pickup = today)
         context = {
             'logged_in_employee': logged_in_employee,
-            'todays_customers': todays_customers,
-            'weekly_pickup': weekly_pickup,
-            'one_time_pickup': one_time_pickup,
-            'today':today
+            'today': today,
+            'customers_need_pickup' : customers_need_pickup
         }
         return render(request, 'employees/index.html', context)
     except ObjectDoesNotExist:

@@ -11,27 +11,51 @@
         Hello {{ logged_in_employee.name }}!<br />
         Address: {{ logged_in_employee.address }} <br>
         ZipCode: {{ logged_in_employee.zipcode }}<br />
-        <h1>Customers in ZipCode</h1>
-        <button>
-          <a href="{% url 'employees:weekday_pickup_search' %}">Click to Search by Day!</a>
-        </button>
-        {% for customer in todays_customers %}
-        <li>Customer Name: {{ customer.name }}<br />
-        Customer ZipCode: {{ customer.zip_code }}<br />
-        Customer Address: {{ customer.address }}<br />
-        Customer Weekly Pick-up: {{customer.weekly_pickup }}<br />
-        Customer One time Pick-up: {{customer.one_time_pickup}}<br />
-
-        <button>
-          <a href="{% url 'employees:confirm_pickup' customer.id %}">Confirm!</a>
-        </button></li>
-
+        <h2>Customers in ZipCode</h2>
         
-        {% endfor %}  
-
-  {% else %}
-    <p>You are at the employee index, but you are not logged in.</p>
-    <a href="{% url 'login' %}">Log In</a>
-    <a href="{% url 'accounts:register' %}">Sign Up</a>
-  {% endif %}
-{% endblock %}
+          <a class = "btn btn-outline-primary" href="{% url 'employees:weekday_pickup_search' %}">Click to Search by Day!</a>
+        
+        <br />
+        <br />
+        <br />
+       
+          <p></p>
+          <h1>Customers to Service Today</h1>
+          <p></p>
+          
+       
+          <table class="table table-dark table-striped">
+         
+            <thead class="thead-dark">
+              <tr>
+                
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Zip Code</th>
+                <th scope="col">Weekly Pickup</th>
+                <th scope="col">One time Pickup</th>
+                <th scope="col">Date of Last Pickup</th>
+                <th scope="col">Confirm Button</th>
+              </tr>
+            </thead>
+           <tbody>
+              {% for customer in customers_need_pickup %}
+              <tr>
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.address }}</td>
+                <td>{{ customer.zip_code }}</td>
+                <td>{{ customer.weekly_pickup }}</td>
+                <td>{{ customer.one_time_pickup }}</td>
+                <td>{{ customer.date_of_last_pickup }}</td>
+                <td><a class = "btn btn-outline-primary" href=" {% url 'employees:confirm_pickup' customer.id %} ">Confirm</a></td>
+               
+                
+              </tr>
+             
+            {% endfor  %}  
+      {% else %}
+        <p>You are at the employee index, but you are not logged in.</p>
+        <a href="{% url 'login' %}">Log In</a>
+        <a href="{% url 'accounts:register' %}">Sign Up</a>
+      {% endif %}
+    {% endblock %}
