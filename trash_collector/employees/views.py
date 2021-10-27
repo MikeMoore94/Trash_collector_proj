@@ -80,6 +80,7 @@ def edit_profile(request):
 def confirm_pickup(request, customer_id):
     Customer = apps.get_model('customers.Customer')
     customers_update = Customer.objects.get(id = customer_id)
+    customers_update.date_of_last_pickup = date.today()
     customers_update.balance += 20
     customers_update.save()
     
