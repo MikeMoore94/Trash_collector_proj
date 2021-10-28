@@ -12,6 +12,7 @@
          <br />
 
         <br />
+      
         <form action="{% url 'employees:weekday_pickup_search' %}" method="post">
             {% csrf_token %}
 
@@ -27,7 +28,7 @@
                 <option value="saturday">Saturday</option>
                 <option value="sunday">Sunday</option>
             </select>
-            <input class =spinner-border spinner-border-md type="submit" value="Search" >
+            <!-- <input class =spinner-border spinner-border-md type="submit" value="Search" > -->
         </form>
         <br />
         <br />
