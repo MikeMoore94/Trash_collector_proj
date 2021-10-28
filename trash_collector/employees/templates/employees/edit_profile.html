@@ -1,13 +1,6 @@
 {% extends 'employee_base.html' %}
-{% block navbar %}
-{% endblock %}
-
-{% block title %} Employee Profile Edit {% endblock %}
-
-{% block header %} Update Your Information {% endblock %}
-
 {% block content %}
-<br/>
+
 <form action="{% url 'employees:edit_profile' %}" method="post">
     {% csrf_token %}
     Name: <input type="text" name="name" id="name" value="{{logged_in_employee.name}}">
